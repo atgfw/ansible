@@ -15,7 +15,8 @@
         backup: yes
       become: true
       
-     - name: Restart service sshd, in all cases
-        ansible.builtin.service:
+    - name: Restart service sshd, in all cases
+      ansible.builtin.service:
         name: sshd
         state: restarted
+      become: true
