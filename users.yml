@@ -1,6 +1,7 @@
 ---
 - name: User administration
   hosts: all
+  ignore_unreachable: true
   tasks:
     - command: cat {{item}}
       register: ssh_keys
