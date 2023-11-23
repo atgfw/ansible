@@ -1,6 +1,5 @@
-# This is a basic workflow to help you get started with Actions
-
-name: CI
+---
+name: 'AWX'
 
 # Controls when the workflow will run
 on:
@@ -14,14 +13,16 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   AddUsers:
-    name: AWX
-    uses: fitbeard/action-trigger-awx@v23.3.0
-    with:
-      tower_url: awx.atgfw.com
-      tower_token: ${{ secrets.AWX_TOKEN }}
-      resource_type: job_template
-      resource_name: Add Users
-      job_type: run
+    runs-on: ubuntu-latest
+    steps:
+      - name: AWX
+        uses: fitbeard/action-trigger-awx@v23.3.0
+          with:
+          tower_url: awx.atgfw.com
+          tower_token: ${{ secrets.AWX_TOKEN }}
+          resource_type: job_template
+          resource_name: Add Users
+          job_type: run
     
     
     
