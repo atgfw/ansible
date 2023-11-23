@@ -18,7 +18,7 @@ jobs:
       - name: AWX
         uses: fitbeard/action-trigger-awx@v23.3.0
         with:
-          tower_url: awx.atgfw.com/api
+          tower_url: awx.atgfw.com/api/v2/
           tower_token: ${{ secrets.AWX_TOKEN }}
           resource_type: job_template
           resource_name: Add Users
