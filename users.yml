@@ -1,8 +1,9 @@
 ---
-hosts_deny: [WoodTechSFTP]
+
 - name: User administration
   hosts: all
-  
+  vars: 
+    hosts_deny: [WoodTechSFTP]
   ignore_unreachable: true
   tasks:
     - command: cat {{item}}
