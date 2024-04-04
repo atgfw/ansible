@@ -1,6 +1,7 @@
 ---
 - name: User administration
   hosts: all
+  passwordEnabled: [WoodTechSFTP]
   ignore_unreachable: true
   tasks:
     - command: cat {{item}}
@@ -49,3 +50,4 @@
         state: present
         backup: yes
       become: true
+      when: inventory_hostname not in passwordEnabled
