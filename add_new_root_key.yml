@@ -1,0 +1,13 @@
+# add_new_root_key.yml
+- name: Add new SSH key for root user
+  hosts: all
+  become: true
+  vars:
+    new_root_pub_key: "{{ lookup('file', 'files/new_root_key.pub') }}"
+  tasks:
+    - name: Ensure new SSH key is present for root
+      authorized_key:
+        user: root
+        key: "{{ new_root_pub_key }}"
+        state: present
+        manage_dir: yes
