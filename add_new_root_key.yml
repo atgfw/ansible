@@ -3,7 +3,7 @@
   hosts: all
   become: true
   vars:
-    new_root_pub_key: "{{ lookup('file', 'files/new_root_key.pub') }}"
+    new_root_pub_key: "{{ lookup('file', 'files/key.pub') }}"
   tasks:
     - name: Ensure new SSH key is present for root
       authorized_key:

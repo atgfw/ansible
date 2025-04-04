@@ -1,0 +1,12 @@
+# remove_old_root_key.yml
+- name: Remove old SSH key for root user
+  hosts: all
+  become: true
+  vars:
+    old_root_pub_key: "{{ lookup('file', 'files/old_key.pub') }}"
+  tasks:
+    - name: Ensure old SSH key is removed for root
+      authorized_key:
+        user: root
+        key: "{{ old_root_pub_key }}"
+        state: absent
