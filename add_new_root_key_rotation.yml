@@ -1,0 +1,17 @@
+---
+# Add the replacement ATG management key without removing existing keys.
+# Run this phase with the current management-key AWX credential.
+- name: Add replacement SSH key for root
+  hosts: all
+  become: true
+  serial: 1
+  any_errors_fatal: true
+  vars:
+    replacement_root_pub_key: "{{ lookup('file', 'files/rotation_key.pub') }}"
+  tasks:
+    - name: Ensure replacement SSH key is present for root
+      ansible.posix.authorized_key:
+        user: root
+        key: "{{ replacement_root_pub_key }}"
+        state: present
+        manage_dir: true

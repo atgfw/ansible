@@ -1,0 +1,16 @@
+---
+# Remove the previous ATG management key after the replacement is verified.
+# Run this phase with the replacement-key AWX credential.
+- name: Remove previous ATG SSH key from root
+  hosts: all
+  become: true
+  serial: 1
+  any_errors_fatal: true
+  vars:
+    previous_root_pub_key: "{{ lookup('file', 'files/current_management_key.pub') }}"
+  tasks:
+    - name: Ensure previous management SSH key is absent for root
+      ansible.posix.authorized_key:
+        user: root
+        key: "{{ previous_root_pub_key }}"
+        state: absent
