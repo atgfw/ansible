@@ -3,6 +3,7 @@
 # Run this phase with the replacement-key AWX credential.
 - name: Remove previous ATG SSH key from root
   hosts: all
+  gather_facts: false
   become: true
   serial: 1
   any_errors_fatal: true
