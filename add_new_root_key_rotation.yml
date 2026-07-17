@@ -10,10 +10,15 @@
   ignore_unreachable: true
   vars:
     replacement_root_pub_key: "{{ lookup('file', 'files/rotation_key.pub') }}"
+    replacement_root_pub_key_b64: "{{ replacement_root_pub_key | b64encode }}"
   tasks:
     - name: Ensure replacement SSH key is present for root
-      ansible.posix.authorized_key:
-        user: root
-        key: "{{ replacement_root_pub_key }}"
-        state: present
-        manage_dir: true
+      ansible.builtin.raw: |
+        set -eu
+        key="$(printf '%s' '{{ replacement_root_pub_key_b64 }}' | base64 -d)"
+        install -d -m 700 /root/.ssh
+        touch /root/.ssh/authorized_keys
+        chmod 600 /root/.ssh/authorized_keys
+        if ! grep -Fqx -- "$key" /root/.ssh/authorized_keys; then
+          printf '%s\\n' "$key" >> /root/.ssh/authorized_keys
+        fi
