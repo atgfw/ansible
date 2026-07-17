@@ -3,9 +3,11 @@
 # Run this phase with the current management-key AWX credential.
 - name: Add replacement SSH key for root
   hosts: all
+  gather_facts: false
   become: true
   serial: 1
   any_errors_fatal: true
+  ignore_unreachable: true
   vars:
     replacement_root_pub_key: "{{ lookup('file', 'files/rotation_key.pub') }}"
   tasks:
